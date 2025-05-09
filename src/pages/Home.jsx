@@ -19,6 +19,17 @@ function Home({ darkMode, toggleDarkMode }) {
     return saved ? JSON.parse(saved) : []
   })
   
+  const [projects, setProjects] = useState(() => {
+    const saved = localStorage.getItem('taskflux-projects')
+    return saved ? JSON.parse(saved) : [
+      { id: '1', name: 'Inbox', color: '#3498db' },
+      { id: '2', name: 'Website Redesign', color: '#e74c3c' },
+      { id: '3', name: 'Mobile App', color: '#2ecc71' },
+    ]
+  })
+  
+  const [selectedProject, setSelectedProject] = useState('all')
+  
   const [selectedCategory, setSelectedCategory] = useState('all')
   
   useEffect(() => {
@@ -28,6 +39,10 @@ function Home({ darkMode, toggleDarkMode }) {
   useEffect(() => {
     localStorage.setItem('taskflux-categories', JSON.stringify(categories))
   }, [categories])
+  
+  useEffect(() => {
+    localStorage.setItem('taskflux-projects', JSON.stringify(projects))
+  }, [projects])
 
   const addCategory = (newCategory) => {
     setCategories([...categories, newCategory])
@@ -39,6 +54,20 @@ function Home({ darkMode, toggleDarkMode }) {
     setCategories(categories.filter(cat => cat.id !== id))
     setTasks(tasks.filter(task => task.categoryId !== id))
     toast.info("Category and related tasks removed")
+  }
+  
+  const addProject = (newProject) => {
+    setProjects([...projects, newProject])
+    toast.success(`Project "${newProject.name}" created!`)
+  }
+  
+  const removeProject = (id) => {
+    // Remove project and set associated tasks to default project
+    setProjects(projects.filter(proj => proj.id !== id))
+    setTasks(tasks.map(task => 
+      task.projectId === id ? { ...task, projectId: projects[0].id } : task
+    ))
+    toast.info("Project removed")
   }
 
   const addTask = (newTask) => {
@@ -74,6 +103,10 @@ function Home({ darkMode, toggleDarkMode }) {
   // Filter tasks based on selected category
   const filteredTasks = selectedCategory === 'all' 
     ? tasks 
+    : selectedProject !== 'all'
+    ? tasks.filter(task => task.categoryId === selectedCategory && task.projectId === selectedProject)
+    : selectedProject === 'all' && selectedCategory !== 'all'
+    ? tasks.filter(task => task.categoryId === selectedCategory)
     : tasks.filter(task => task.categoryId === selectedCategory)
   
   // Calculate stats
@@ -167,6 +200,48 @@ function Home({ darkMode, toggleDarkMode }) {
               </div>
               
               <div className="space-y-2">
+                <h3 className="text-sm uppercase font-semibold text-surface-500 tracking-wider mt-4 mb-2">
+                  Projects
+                </h3>
+                
+                <button
+                  onClick={() => {
+                    setSelectedProject('all')
+                    if (selectedCategory === 'all') {
+                      // Show all tasks
+                    }
+                  }}
+                  className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors
+                    ${selectedProject === 'all' && selectedCategory === 'all'
+                      ? 'bg-primary text-white' 
+                      : 'hover:bg-surface-100 dark:hover:bg-surface-700'
+                    }`}
+                >
+                  <ListTodoIcon className="w-4 h-4" />
+                  <span>All Projects</span>
+                </button>
+                
+                {projects.map(project => (
+                  <button
+                    key={project.id}
+                    onClick={() => {
+                      setSelectedProject(project.id)
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors
+                      ${selectedProject === project.id
+                        ? 'bg-primary text-white' 
+                        : 'hover:bg-surface-100 dark:hover:bg-surface-700'
+                      }`}
+                  >
+                    <span 
+                      className="w-3 h-3 rounded-full" 
+                      style={{ backgroundColor: project.color }}
+                    />
+                    <span>{project.name}</span>
+                  </button>
+                ))}
+                
+                <h3 className="text-sm uppercase font-semibold text-surface-500 tracking-wider mt-4 mb-2">Categories</h3>
                 <button
                   onClick={() => setSelectedCategory('all')}
                   className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors
@@ -205,11 +280,14 @@ function Home({ darkMode, toggleDarkMode }) {
             <MainFeature 
               tasks={filteredTasks} 
               categories={categories}
+              projects={projects}
               selectedCategory={selectedCategory}
+              selectedProject={selectedProject}
               onAddTask={addTask}
               onUpdateTask={updateTask}
               onDeleteTask={deleteTask}
               onToggleComplete={toggleTaskCompletion}
+              onAddProject={addProject}
               onAddCategory={addCategory}
             />
           </div>

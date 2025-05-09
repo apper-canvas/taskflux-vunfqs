@@ -9,10 +9,13 @@ function MainFeature({
   tasks, 
   categories, 
   selectedCategory,
+  projects,
+  selectedProject,
   onAddTask, 
   onUpdateTask, 
   onDeleteTask, 
   onToggleComplete,
+  onAddProject,
   onAddCategory 
 }) {
   // States
@@ -21,11 +24,13 @@ function MainFeature({
     description: '', 
     dueDate: '',
     priority: 'medium',
-    categoryId: selectedCategory !== 'all' ? selectedCategory : (categories.length > 0 ? categories[0].id : '')
+    categoryId: selectedCategory !== 'all' ? selectedCategory : (categories.length > 0 ? categories[0].id : ''),
+    projectId: selectedProject !== 'all' ? selectedProject : (projects.length > 0 ? projects[0].id : '')
   })
   
   const [editingTask, setEditingTask] = useState(null)
   const [isAddingCategory, setIsAddingCategory] = useState(false)
+  const [isAddingProject, setIsAddingProject] = useState(false)
   const [newCategory, setNewCategory] = useState({ name: '', color: '#3b82f6' })
   const [filterPriority, setFilterPriority] = useState('all')
   const [sortBy, setSortBy] = useState('dueDate')
@@ -48,13 +53,24 @@ function MainFeature({
   const ArrowUpIcon = getIcon('ArrowUp')
   const TagIcon = getIcon('Tag')
   const SaveIcon = getIcon('Save')
+  const FolderIcon = getIcon('Folder')
   
+  const [newProject, setNewProject] = useState({ name: '', color: '#3498db' })
   // Update newTask.categoryId when selectedCategory changes
   useEffect(() => {
     if (selectedCategory !== 'all') {
       setNewTask(prev => ({ ...prev, categoryId: selectedCategory }))
     } else if (categories.length > 0) {
       setNewTask(prev => ({ ...prev, categoryId: categories[0].id }))
+      setNewTask(prev => ({ ...prev, categoryId: categories[0].id }))
+    }
+  }, [selectedCategory, categories])
+  
+  // Update newTask.projectId when selectedProject changes
+  useEffect(() => {
+    if (selectedProject !== 'all') {
+      setNewTask(prev => ({ ...prev, projectId: selectedProject }))
+    } else if (projects.length > 0) {
     }
   }, [selectedCategory, categories])
   
@@ -88,7 +104,8 @@ function MainFeature({
       description: '', 
       dueDate: '',
       priority: 'medium',
-      categoryId: selectedCategory !== 'all' ? selectedCategory : (categories.length > 0 ? categories[0].id : '') 
+      categoryId: selectedCategory !== 'all' ? selectedCategory : (categories.length > 0 ? categories[0].id : ''),
+      projectId: selectedProject !== 'all' ? selectedProject : (projects.length > 0 ? projects[0].id : '')
     })
   }
   
@@ -135,6 +152,29 @@ function MainFeature({
     setIsAddingCategory(false)
   }
   
+  // Project handling functions
+  const handleAddProject = (e) => {
+    e.preventDefault()
+    
+    if (!newProject.name.trim()) {
+      toast.error("Project name is required")
+      return
+    }
+    
+    const projectWithSameName = projects.find(
+      p => p.name.toLowerCase() === newProject.name.toLowerCase()
+    )
+    
+    if (projectWithSameName) {
+      toast.error("A project with this name already exists")
+      return
+    }
+    
+    onAddProject({ id: uuidv4(), ...newProject, createdAt: new Date().toISOString() })
+    setNewProject({ name: '', color: '#3498db' })
+    setIsAddingProject(false)
+  }
+  
   // Filter and sort functions
   const getFilteredAndSortedTasks = () => {
     let filteredTasks = [...tasks]
@@ -147,6 +187,11 @@ function MainFeature({
     // Filter by priority
     if (filterPriority !== 'all') {
       filteredTasks = filteredTasks.filter(task => task.priority === filterPriority)
+    }
+
+    // Filter by project if selected
+    if (selectedProject !== 'all') {
+      filteredTasks = filteredTasks.filter(task => task.projectId === selectedProject)
     }
     
     // Sort
@@ -210,6 +255,12 @@ function MainFeature({
     return category ? category.name : 'Uncategorized'
   }
   
+  // Get project details
+  const getProjectName = (projectId) => {
+    const project = projects.find(p => p.id === projectId)
+    return project ? project.name : 'Inbox'
+  }
+  
   return (
     <div className="space-y-6">
       {/* Task Form */}
@@ -238,7 +289,7 @@ function MainFeature({
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
+            <div className="col-span-1">
               <label htmlFor="taskCategory" className="block text-sm font-medium mb-1">Category</label>
               <div className="relative">
                 <select
@@ -261,7 +312,31 @@ function MainFeature({
                 </div>
               </div>
             </div>
+            <div className="col-span-1">
+              <label htmlFor="taskProject" className="block text-sm font-medium mb-1">Project</label>
+              <div className="relative">
+                <select
+                  id="taskProject"
+                  className="input appearance-none pr-10"
+                  value={editingTask ? editingTask.projectId : newTask.projectId}
+                  onChange={(e) => editingTask 
+                    ? setEditingTask({...editingTask, projectId: e.target.value})
+                    : setNewTask({...newTask, projectId: e.target.value})
+                  }
+                >
+                  {projects.map(project => (
+                    <option key={project.id} value={project.id}>
+                      {project.name}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <FolderIcon className="w-5 h-5 text-surface-400" />
+                </div>
+              </div>
+            </div>
             
+            <div className="col-span-1">
             <div>
               <label htmlFor="taskPriority" className="block text-sm font-medium mb-1">Priority</label>
               <div className="relative">
@@ -283,24 +358,6 @@ function MainFeature({
                 </div>
               </div>
             </div>
-            
-            <div>
-              <label htmlFor="taskDueDate" className="block text-sm font-medium mb-1">Due Date</label>
-              <div className="relative">
-                <input
-                  id="taskDueDate"
-                  type="date"
-                  className="input pr-10"
-                  value={editingTask ? (editingTask.dueDate || '') : (newTask.dueDate || '')}
-                  onChange={(e) => editingTask 
-                    ? setEditingTask({...editingTask, dueDate: e.target.value})
-                    : setNewTask({...newTask, dueDate: e.target.value})
-                  }
-                />
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <CalendarIcon className="w-5 h-5 text-surface-400" />
-                </div>
-              </div>
             </div>
           </div>
           
@@ -319,6 +376,25 @@ function MainFeature({
             ></textarea>
           </div>
           
+            <div>
+              <label htmlFor="taskDueDate" className="block text-sm font-medium mb-1">Due Date</label>
+              <div className="relative">
+                <input
+                  id="taskDueDate"
+                  type="date"
+                  className="input pr-10"
+                  value={editingTask ? (editingTask.dueDate || '') : (newTask.dueDate || '')}
+                  onChange={(e) => editingTask 
+                    ? setEditingTask({...editingTask, dueDate: e.target.value})
+                    : setNewTask({...newTask, dueDate: e.target.value})
+                  }
+                />
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <CalendarIcon className="w-5 h-5 text-surface-400" />
+                </div>
+              </div>
+            </div>
+            
           <div className="flex justify-end gap-2">
             {editingTask && (
               <button
@@ -363,6 +439,9 @@ function MainFeature({
           >
             {isAddingCategory ? <XIcon className="w-4 h-4" /> : <TagIcon className="w-4 h-4" />}
             {isAddingCategory ? 'Cancel' : 'Add Category'}
+        <button onClick={() => setIsAddingProject(!isAddingProject)} className="btn btn-outline text-sm py-1.5">
+          {isAddingProject ? <XIcon className="w-4 h-4" /> : <FolderIcon className="w-4 h-4" />} {isAddingProject ? 'Cancel' : 'Add Project'}
+        </button>
           </button>
         </div>
       </div>
@@ -424,6 +503,67 @@ function MainFeature({
                   >
                     <PlusIcon className="w-4 h-4" />
                     Create Category
+                  </button>
+                </div>
+              </form>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* New Project Form */}
+      <AnimatePresence>
+        {isAddingProject && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="card">
+              <h3 className="text-lg font-semibold mb-3">New Project</h3>
+              <form onSubmit={handleAddProject} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="projectName" className="block text-sm font-medium mb-1">
+                      Project Name <span className="text-accent">*</span>
+                    </label>
+                    <input
+                      id="projectName"
+                      type="text"
+                      className="input"
+                      placeholder="e.g., Website Redesign, Mobile App..."
+                      value={newProject.name}
+                      onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="projectColor" className="block text-sm font-medium mb-1">
+                      Color
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        id="projectColor"
+                        type="color"
+                        className="h-10 w-10 rounded border border-surface-200 dark:border-surface-700"
+                        value={newProject.color}
+                        onChange={(e) => setNewProject({...newProject, color: e.target.value})}
+                      />
+                      <input
+                        type="text"
+                        className="input"
+                        value={newProject.color}
+                        onChange={(e) => setNewProject({...newProject, color: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end">
+                  <button type="submit" className="btn btn-primary">
+                    <PlusIcon className="w-4 h-4" /> Create Project
                   </button>
                 </div>
               </form>
@@ -535,6 +675,20 @@ function MainFeature({
                         
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
+                            backgroundColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}20`, 
+                            color: projects.find(p => p.id === task.projectId)?.color || '#3498db',
+                            borderColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
+                          }}
+                        >
+                          <span className="flex items-center gap-1">
+                            <FolderIcon className="w-3 h-3" />
+                            {getProjectName(task.projectId)}
+                          </span>
+                        </div>
+                        
+                        <div 
+                          className="text-xs px-2 py-0.5 rounded-full border"
+                          style={{ 
                           style={{ 
                             backgroundColor: `${getCategoryColor(task.categoryId)}20`, 
                             color: getCategoryColor(task.categoryId),
