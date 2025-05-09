@@ -19,7 +19,6 @@ function MainFeature({
 }) {
   // States
   const [newTask, setNewTask] = useState({ 
-  ChevronDownIcon,
     description: '', 
     dueDate: '',
     priority: 'medium',
@@ -146,8 +145,9 @@ function MainFeature({
       ...newCategory,
       createdAt: new Date().toISOString()
     })
-    
-      <h2 className="text-xl font-bold mb-6">Task Dashboard</h2>
+
+    setNewCategory({ name: '', color: '#3b82f6' });
+    setIsAddingCategory(false);
       toast.error("A project with this name already exists")
       return
     }
