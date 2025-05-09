@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
+import NavigationMenu from '../components/NavigationMenu'
 import { motion } from 'framer-motion'
 import MainFeature from '../components/MainFeature'
 import getIcon from '../utils/iconUtils'
-
-function Home({ darkMode, toggleDarkMode }) {
-  const [categories, setCategories] = useState(() => {
+    <div className="min-h-screen">
+      <NavigationMenu darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <div className="p-4 md:p-6">
+        <div className="max-w-7xl mx-auto">
+          <MainFeature darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        </div>
     const saved = localStorage.getItem('taskflux-categories')
     return saved ? JSON.parse(saved) : [
       { id: '1', name: 'Personal', color: '#3b82f6' },

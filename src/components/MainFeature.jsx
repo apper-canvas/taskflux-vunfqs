@@ -9,7 +9,6 @@ function MainFeature({
   tasks, 
   categories, 
   selectedCategory,
-  projects,
   selectedProject,
   onAddTask, 
   onUpdateTask, 
@@ -20,7 +19,7 @@ function MainFeature({
 }) {
   // States
   const [newTask, setNewTask] = useState({ 
-    title: '', 
+  ChevronDownIcon,
     description: '', 
     dueDate: '',
     priority: 'medium',
@@ -148,24 +147,7 @@ function MainFeature({
       createdAt: new Date().toISOString()
     })
     
-    setNewCategory({ name: '', color: '#3b82f6' })
-    setIsAddingCategory(false)
-  }
-  
-  // Project handling functions
-  const handleAddProject = (e) => {
-    e.preventDefault()
-    
-    if (!newProject.name.trim()) {
-      toast.error("Project name is required")
-      return
-    }
-    
-    const projectWithSameName = projects.find(
-      p => p.name.toLowerCase() === newProject.name.toLowerCase()
-    )
-    
-    if (projectWithSameName) {
+      <h2 className="text-xl font-bold mb-6">Task Dashboard</h2>
       toast.error("A project with this name already exists")
       return
     }
@@ -676,7 +658,7 @@ function MainFeature({
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
                           style={{ 
-                            backgroundColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}20`, 
+                        className="text-xs px-2 py-0.5 rounded-full border"
                             color: projects.find(p => p.id === task.projectId)?.color || '#3498db',
                             borderColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
                           }}
