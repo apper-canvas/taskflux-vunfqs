@@ -664,13 +664,12 @@ function MainFeature({
                         
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
-                        className="text-xs px-2 py-0.5 rounded-full border"
+                          className="text-xs px-2 py-0.5 rounded-full border"
+                          style={{
                             backgroundColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}20`,
                             borderColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
-                          }}
                         >
-                          className="text-xs px-2 py-0.5 rounded-full border"
-                          <span className="flex items-center gap-1">
+                        >
                             <FolderIcon className="w-3 h-3" />
                             {getProjectName(task.projectId)}
                           </span>
