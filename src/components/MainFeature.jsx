@@ -44,6 +44,7 @@ function MainFeature({
   const LayersIcon = getIcon('Layers')
   const FilterIcon = getIcon('Filter')
   const ArrowDownIcon = getIcon('ArrowDown')
+  const ChevronDownIcon = getIcon('ChevronDown')
   const ArrowUpIcon = getIcon('ArrowUp')
   const TagIcon = getIcon('Tag')
   const SaveIcon = getIcon('Save')
