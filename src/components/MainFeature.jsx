@@ -148,7 +148,14 @@ function MainFeature({
 
     setNewCategory({ name: '', color: '#3b82f6' });
     setIsAddingCategory(false);
-      toast.error("A project with this name already exists")
+  }
+
+  // Project handling functions
+  const handleAddProject = (e) => {
+    e.preventDefault()
+    
+    if (!newProject.name.trim()) {
+      toast.error("Project name is required")
       return
     }
     
@@ -156,7 +163,7 @@ function MainFeature({
     setNewProject({ name: '', color: '#3498db' })
     setIsAddingProject(false)
   }
-  
+
   // Filter and sort functions
   const getFilteredAndSortedTasks = () => {
     let filteredTasks = [...tasks]
