@@ -675,6 +675,7 @@ function MainFeature({
                         
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
+                          style={{ 
                             backgroundColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}20`, 
                             color: projects.find(p => p.id === task.projectId)?.color || '#3498db',
                             borderColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
@@ -688,7 +689,6 @@ function MainFeature({
                         
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
-                          style={{ 
                           style={{ 
                             backgroundColor: `${getCategoryColor(task.categoryId)}20`, 
                             color: getCategoryColor(task.categoryId),
