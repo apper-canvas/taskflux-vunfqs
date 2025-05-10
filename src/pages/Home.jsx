@@ -7,7 +7,7 @@ import getIcon from '../utils/iconUtils'
 
 function Home({ darkMode, toggleDarkMode }) {
   const [categories, setCategories] = useState(() => {
-    const saved = localStorage.getItem('taskflux-categories')
+    const saved = localStorage.getItem('todoos-categories')
     return saved ? JSON.parse(saved) : [
       { id: '1', name: 'Personal', color: '#3b82f6' },
       { id: '2', name: 'Work', color: '#f43f5e' },
@@ -16,12 +16,12 @@ function Home({ darkMode, toggleDarkMode }) {
   })
   
   const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('taskflux-tasks')
+    const saved = localStorage.getItem('todoos-tasks')
     return saved ? JSON.parse(saved) : []
   })
   
   const [projects, setProjects] = useState(() => {
-    const saved = localStorage.getItem('taskflux-projects')
+    const saved = localStorage.getItem('todoos-projects')
     return saved ? JSON.parse(saved) : [
       { id: '1', name: 'Inbox', color: '#3498db' },
       { id: '2', name: 'Website Redesign', color: '#e74c3c' },
@@ -34,15 +34,15 @@ function Home({ darkMode, toggleDarkMode }) {
   const [selectedCategory, setSelectedCategory] = useState('all')
   
   useEffect(() => {
-    localStorage.setItem('taskflux-tasks', JSON.stringify(tasks))
+    localStorage.setItem('todoos-tasks', JSON.stringify(tasks))
   }, [tasks])
   
   useEffect(() => {
-    localStorage.setItem('taskflux-categories', JSON.stringify(categories))
+    localStorage.setItem('todoos-categories', JSON.stringify(categories))
   }, [categories])
   
   useEffect(() => {
-    localStorage.setItem('taskflux-projects', JSON.stringify(projects))
+    localStorage.setItem('todoos-projects', JSON.stringify(projects))
   }, [projects])
 
   const addCategory = (newCategory) => {
@@ -132,7 +132,7 @@ function Home({ darkMode, toggleDarkMode }) {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between relative">
           <div className="flex items-center gap-2">
             <ListTodoIcon className="w-6 h-6 text-primary" />
-            <h1 className="text-xl md:text-2xl font-bold text-primary dark:text-primary-light">TaskFlux</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-primary dark:text-primary-light">Todoo's</h1>
           </div>
           
           <button 
@@ -299,7 +299,7 @@ function Home({ darkMode, toggleDarkMode }) {
       {/* Footer */}
       <footer className="mt-auto border-t border-surface-200 dark:border-surface-700 py-4 bg-gradient-to-t from-white to-surface-50 dark:from-surface-800 dark:to-surface-900">
         <div className="container mx-auto px-4 text-center text-surface-500 text-sm">
-          TaskFlux &copy; {new Date().getFullYear()} — Simple and efficient task management
+          Todoo's &copy; {new Date().getFullYear()} — Simple and efficient task management
         </div>
       </footer>
     </div>
