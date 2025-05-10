@@ -669,9 +669,8 @@ function MainFeature({
                             borderColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
                           }}
                         >
-                          <FolderIcon className="w-3 h-3" />
+                          <FolderIcon className="w-3 h-3 inline-block mr-1" />
                           {getProjectName(task.projectId)}
-                        </div>
                         </div>
                         
                         <div 
@@ -683,6 +682,7 @@ function MainFeature({
                           }}
                         >
                           {getCategoryName(task.categoryId)}
+                      </div>
                         </div>
                       </div>
                       
