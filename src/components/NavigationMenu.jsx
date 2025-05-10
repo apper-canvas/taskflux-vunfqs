@@ -24,7 +24,7 @@ const NavigationMenu = ({ darkMode, toggleDarkMode }) => {
   ];
 
   return (
-    <nav className="bg-white dark:bg-surface-800 border-b border-surface-200 dark:border-surface-700 py-3 px-4 sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-white to-surface-50 dark:from-surface-800 dark:to-surface-900 border-b border-surface-200 dark:border-surface-700 py-3 px-4 sticky top-0 z-50 backdrop-blur-sm">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           {/* Logo and brand */}
@@ -39,7 +39,7 @@ const NavigationMenu = ({ darkMode, toggleDarkMode }) => {
               <Link
                 key={item.name}
                 to={item.path}
-                className="flex items-center space-x-1 px-2 py-1 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700"
+                className="flex items-center space-x-1 px-2 py-1 rounded-lg nav-item-gradient"
               >
                 {item.icon}
                 <span>{item.name}</span>
@@ -47,7 +47,7 @@ const NavigationMenu = ({ darkMode, toggleDarkMode }) => {
             ))}
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700"
+              className="p-2 rounded-full nav-item-gradient"
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <SunIcon size={20} /> : <MoonIcon size={20} />}
@@ -56,10 +56,10 @@ const NavigationMenu = ({ darkMode, toggleDarkMode }) => {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
-            <button onClick={toggleDarkMode} className="p-2 mr-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700">
+            <button onClick={toggleDarkMode} className="p-2 mr-2 rounded-full nav-item-gradient">
               {darkMode ? <SunIcon size={20} /> : <MoonIcon size={20} />}
             </button>
-            <button onClick={toggleMobileMenu} className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700">
+            <button onClick={toggleMobileMenu} className="p-2 rounded-full nav-item-gradient">
               {isMobileMenuOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
             </button>
           </div>

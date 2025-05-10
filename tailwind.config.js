@@ -44,8 +44,24 @@ export default {
       borderRadius: {
         'xl': '0.75rem',
         '2xl': '1rem'
+      },
+      backgroundImage: {
+        'gradient-primary': 'linear-gradient(135deg, #3b82f6, #2563eb)',
+        'gradient-secondary': 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+        'gradient-accent': 'linear-gradient(135deg, #f43f5e, #e11d48)',
+        'gradient-success': 'linear-gradient(135deg, #10b981, #059669)',
+        'gradient-warning': 'linear-gradient(135deg, #f59e0b, #d97706)',
+        'gradient-danger': 'linear-gradient(135deg, #ef4444, #dc2626)',
+        'gradient-surface-light': 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
+        'gradient-surface-dark': 'linear-gradient(135deg, #1e293b, #0f172a)',
+        'gradient-card-light': 'linear-gradient(to bottom right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8))',
+        'gradient-card-dark': 'linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9))',
+        'gradient-sidebar-light': 'linear-gradient(to bottom, #ffffff, #f8fafc)',
+        'gradient-sidebar-dark': 'linear-gradient(to bottom, #1e293b, #0f172a)',
+        'gradient-task-light': 'linear-gradient(to bottom right, #ffffff, #f8fafc)',
+        'gradient-task-dark': 'linear-gradient(to bottom right, #1e293b, #0f172a)'
       }
-    }
+    },
   },
   plugins: [],
   darkMode: 'class',

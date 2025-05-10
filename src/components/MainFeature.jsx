@@ -444,7 +444,7 @@ function MainFeature({
             onClick={() => setShowCompleted(!showCompleted)}
             className={`py-1.5 px-3 rounded-lg text-sm flex items-center gap-1.5
               ${showCompleted 
-                ? 'bg-primary/10 text-primary dark:bg-primary/20' 
+                ? 'bg-gradient-to-r from-primary/10 to-primary/5 text-primary dark:from-primary/20 dark:to-primary/10' 
                 : 'bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-600'
               }`}
           >
@@ -453,7 +453,7 @@ function MainFeature({
           </button>
         </div>
       </div>
-      
+
       {/* Task Form */}
       <div className="card" ref={taskFormRef}>
         <h2 className="text-xl font-semibold mb-4">
@@ -621,7 +621,7 @@ function MainFeature({
           <div className="card text-center py-8">
             <p className="text-surface-500 dark:text-surface-400">
               {tasks && tasks.length === 0 
-                ? "No tasks yet. Add your first task above!" 
+                ? "No tasks yet. Add your first task above!"
                 : "No tasks match the current filters."}
             </p>
           </div>
@@ -632,11 +632,11 @@ function MainFeature({
               
               return (
                 <motion.div 
-                  key={task.id}
+                  key={task.id} 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.2 }} 
                   className={`task-card ${task.isCompleted ? 'bg-surface-50 dark:bg-surface-800/50' : ''}`}
                 >
                   <div className="flex items-start gap-3">
@@ -658,7 +658,7 @@ function MainFeature({
                         </h3>
                         
                         <div 
-                          className={`${priorityStyles.bg} ${priorityStyles.text} text-xs px-2 py-0.5 rounded-full border ${priorityStyles.border}`}
+                          className={`bg-gradient-to-r ${priorityStyles.bg} ${priorityStyles.text} text-xs px-2 py-0.5 rounded-full border ${priorityStyles.border}`}
                         >
                           {task.priority}
                         </div>
@@ -666,7 +666,7 @@ function MainFeature({
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
                           style={{
-                            backgroundColor: `${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}20`,
+                            background: `linear-gradient(135deg, ${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}30, ${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}10)`,
                             borderColor: `${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
                           }}
                         >
@@ -677,7 +677,7 @@ function MainFeature({
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
                           style={{ 
-                            backgroundColor: `${getCategoryColor(task.categoryId)}20`, 
+                            background: `linear-gradient(135deg, ${getCategoryColor(task.categoryId)}30, ${getCategoryColor(task.categoryId)}10)`,
                             color: getCategoryColor(task.categoryId),
                             borderColor: `${getCategoryColor(task.categoryId)}40`
                           }}
@@ -713,14 +713,14 @@ function MainFeature({
                     <div className="flex flex-shrink-0 gap-1">
                       <button 
                         onClick={() => startEditTask(task)}
-                        className="p-1.5 text-surface-500 hover:text-primary hover:bg-surface-100 dark:hover:bg-surface-700 rounded-lg"
+                        className="p-1.5 text-surface-500 hover:text-primary hover:bg-gradient-to-r hover:from-surface-100 hover:to-white dark:hover:from-surface-700 dark:hover:to-surface-800 rounded-lg"
                         aria-label="Edit task"
                       >
                         <EditIcon className="w-4 h-4" />
                       </button>
                       
                       <button 
-                        onClick={() => onDeleteTask(task.id)}
+                        onClick={() => onDeleteTask(task.id)} 
                         className="p-1.5 text-surface-500 hover:text-accent hover:bg-surface-100 dark:hover:bg-surface-700 rounded-lg"
                         aria-label="Delete task"
                       >

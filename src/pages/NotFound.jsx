@@ -8,7 +8,7 @@ function NotFound() {
   const HomeIcon = getIcon('Home')
   
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-gradient-to-br from-surface-50 to-white dark:from-surface-900 dark:to-surface-800">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -16,7 +16,7 @@ function NotFound() {
         className="card max-w-md w-full mx-auto text-center"
       >
         <div className="flex justify-center mb-6">
-          <div className="p-4 rounded-full bg-surface-100 dark:bg-surface-800 neu-light">
+          <div className="p-4 rounded-full bg-gradient-to-br from-surface-100 to-white dark:from-surface-800 dark:to-surface-700 neu-light">
             <AlertCircleIcon className="h-12 w-12 text-accent" />
           </div>
         </div>

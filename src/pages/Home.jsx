@@ -128,8 +128,8 @@ function Home({ darkMode, toggleDarkMode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <NavigationMenu darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <header className="sticky top-0 z-10 bg-white dark:bg-surface-800 border-b border-surface-200 dark:border-surface-700 shadow-sm">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+      <header className="sticky top-0 z-10 bg-gradient-header border-b border-surface-200 dark:border-surface-700 shadow-sm backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between relative">
           <div className="flex items-center gap-2">
             <ListTodoIcon className="w-6 h-6 text-primary" />
             <h1 className="text-xl md:text-2xl font-bold text-primary dark:text-primary-light">TaskFlux</h1>
@@ -137,7 +137,7 @@ function Home({ darkMode, toggleDarkMode }) {
           
           <button 
             onClick={toggleDarkMode}
-            className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
+            className="p-2 rounded-full hover:bg-gradient-to-r hover:from-surface-100 hover:to-white dark:hover:from-surface-700 dark:hover:to-surface-800 transition-colors"
             aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
             {darkMode ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
@@ -145,14 +145,14 @@ function Home({ darkMode, toggleDarkMode }) {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-6 flex-grow">
+      <div className="container mx-auto px-4 py-6 flex-grow bg-gradient-surface">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
           <div className="w-full lg:w-1/4">
             <div className="card mb-6">
               <h2 className="text-lg font-semibold mb-4">Task Overview</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
-                <div className="flex items-center gap-3 bg-surface-50 dark:bg-surface-700/30 p-3 rounded-xl">
+                <div className="flex items-center gap-3 bg-gradient-to-br from-surface-50 to-white dark:from-surface-700/30 dark:to-surface-800/30 p-3 rounded-xl">
                   <ListTodoIcon className="w-5 h-5 text-primary" />
                   <div>
                     <p className="text-sm text-surface-500">Total Tasks</p>
@@ -160,7 +160,7 @@ function Home({ darkMode, toggleDarkMode }) {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3 bg-surface-50 dark:bg-surface-700/30 p-3 rounded-xl">
+                <div className="flex items-center gap-3 bg-gradient-to-br from-surface-50 to-white dark:from-surface-700/30 dark:to-surface-800/30 p-3 rounded-xl">
                   <CheckCircleIcon className="w-5 h-5 text-green-500" />
                   <div>
                     <p className="text-sm text-surface-500">Completed</p>
@@ -168,7 +168,7 @@ function Home({ darkMode, toggleDarkMode }) {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3 bg-surface-50 dark:bg-surface-700/30 p-3 rounded-xl">
+                <div className="flex items-center gap-3 bg-gradient-to-br from-surface-50 to-white dark:from-surface-700/30 dark:to-surface-800/30 p-3 rounded-xl">
                   <ClockIcon className="w-5 h-5 text-accent" />
                   <div>
                     <p className="text-sm text-surface-500">Pending</p>
@@ -184,7 +184,7 @@ function Home({ darkMode, toggleDarkMode }) {
                     <span className="text-sm font-medium">{completionRate}%</span>
                   </div>
                   <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-2">
-                    <motion.div 
+                      className="bg-gradient-to-r from-primary to-primary-dark h-2 rounded-full"
                       className="bg-primary h-2 rounded-full"
                       initial={{ width: '0%' }}
                       animate={{ width: `${completionRate}%` }}
@@ -212,9 +212,9 @@ function Home({ darkMode, toggleDarkMode }) {
                       // Show all tasks
                     }
                   }}
-                  className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors
+                  className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-all
                     ${selectedProject === 'all' && selectedCategory === 'all'
-                      ? 'bg-primary text-white' 
+                      ? 'bg-gradient-primary text-white' 
                       : 'hover:bg-surface-100 dark:hover:bg-surface-700'
                     }`}
                 >
@@ -228,9 +228,9 @@ function Home({ darkMode, toggleDarkMode }) {
                     onClick={() => {
                       setSelectedProject(project.id)
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors
+                    className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-all
                       ${selectedProject === project.id
-                        ? 'bg-primary text-white' 
+                        ? 'bg-gradient-primary text-white' 
                         : 'hover:bg-surface-100 dark:hover:bg-surface-700'
                       }`}
                   >
@@ -245,9 +245,9 @@ function Home({ darkMode, toggleDarkMode }) {
                 <h3 className="text-sm uppercase font-semibold text-surface-500 tracking-wider mt-4 mb-2">Categories</h3>
                 <button
                   onClick={() => setSelectedCategory('all')}
-                  className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors
+                  className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-all
                     ${selectedCategory === 'all' 
-                      ? 'bg-primary text-white' 
+                      ? 'bg-gradient-primary text-white' 
                       : 'hover:bg-surface-100 dark:hover:bg-surface-700'
                     }`}
                 >
@@ -259,9 +259,9 @@ function Home({ darkMode, toggleDarkMode }) {
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors
+                    className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-all
                       ${selectedCategory === category.id 
-                        ? 'bg-primary text-white' 
+                        ? 'bg-gradient-primary text-white' 
                         : 'hover:bg-surface-100 dark:hover:bg-surface-700'
                       }`}
                   >
@@ -296,7 +296,7 @@ function Home({ darkMode, toggleDarkMode }) {
       </div>
       
       {/* Footer */}
-      <footer className="mt-auto border-t border-surface-200 dark:border-surface-700 py-4">
+      <footer className="mt-auto border-t border-surface-200 dark:border-surface-700 py-4 bg-gradient-to-t from-white to-surface-50 dark:from-surface-800 dark:to-surface-900">
         <div className="container mx-auto px-4 text-center text-surface-500 text-sm">
           TaskFlux &copy; {new Date().getFullYear()} — Simple and efficient task management
         </div>

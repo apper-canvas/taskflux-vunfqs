@@ -14,7 +14,7 @@
   }
 
   body {
-    @apply font-sans text-surface-800 dark:text-surface-100 bg-surface-50 dark:bg-surface-900;
+    @apply font-sans text-surface-800 dark:text-surface-100 bg-gradient-to-br from-surface-50 to-white dark:from-surface-900 dark:to-surface-800;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -40,11 +40,11 @@
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-primary-dark text-white shadow-md hover:shadow-lg active:scale-95;
+    @apply bg-gradient-primary hover:from-primary-dark hover:to-primary text-white shadow-md hover:shadow-lg active:scale-95;
   }
 
   .btn-secondary {
-    @apply bg-secondary hover:bg-secondary-dark text-white shadow-md hover:shadow-lg active:scale-95;
+    @apply bg-gradient-secondary hover:from-secondary-dark hover:to-secondary text-white shadow-md hover:shadow-lg active:scale-95;
   }
 
   .btn-outline {
@@ -56,11 +56,15 @@
   }
 
   .card {
-    @apply bg-white dark:bg-surface-800 rounded-2xl shadow-card dark:shadow-none p-5 border border-surface-200 dark:border-surface-700;
+    @apply bg-gradient-card-light dark:bg-gradient-card-dark rounded-2xl shadow-card dark:shadow-none p-5 border border-surface-200 dark:border-surface-700 backdrop-blur-sm;
   }
 
   .task-card {
-    @apply card flex flex-col gap-2 hover:shadow-soft transition-all duration-300 hover:border-primary-light dark:hover:border-primary-dark;
+    @apply card flex flex-col gap-2 hover:shadow-soft transition-all duration-300 hover:border-primary-light dark:hover:border-primary-dark bg-gradient-task-light dark:bg-gradient-task-dark;
+  }
+  
+  .sidebar-card {
+    @apply bg-gradient-sidebar-light dark:bg-gradient-sidebar-dark rounded-2xl shadow-card dark:shadow-none p-5 border border-surface-200 dark:border-surface-700;
   }
 }
 
@@ -73,7 +77,30 @@
     display: none;
   }
   
+  /* Gradient Utilities */
+  .bg-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-primary-dark;
+  }
+  
+  .bg-gradient-secondary {
+    @apply bg-gradient-to-r from-secondary to-secondary-dark;
+  }
+  
+  .bg-gradient-surface {
+    @apply bg-gradient-to-br from-surface-50 to-white dark:from-surface-900 dark:to-surface-800;
+  }
+  
+  .bg-gradient-header {
+    @apply bg-gradient-to-r from-white to-surface-50 dark:from-surface-800 dark:to-surface-900 backdrop-blur-sm;
+  }
+  
+  .nav-item-gradient {
+    @apply hover:bg-gradient-to-r hover:from-surface-100 hover:to-white dark:hover:from-surface-700 dark:hover:to-surface-800;
+  }
+  
+  
   .neu-light {
     @apply shadow-neu-light dark:shadow-neu-dark;
   }
+  
 }
