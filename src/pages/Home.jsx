@@ -128,11 +128,6 @@ function Home({ darkMode, toggleDarkMode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <NavigationMenu darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <div className="p-4 md:p-6">
-        <div className="max-w-7xl mx-auto">
-          <MainFeature darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        </div>
-      </div>
       <header className="sticky top-0 z-10 bg-white dark:bg-surface-800 border-b border-surface-200 dark:border-surface-700 shadow-sm">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
