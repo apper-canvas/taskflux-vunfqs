@@ -5,17 +5,18 @@ import { toast } from 'react-toastify'
 import { motion, AnimatePresence } from 'framer-motion'
 import getIcon from '../utils/iconUtils'
 
-function MainFeature({ 
-  tasks, 
-  categories, 
+function MainFeature({
+  tasks = [], 
+  categories = [], 
+  projects = [],
   selectedCategory,
   selectedProject,
-  onAddTask, 
-  onUpdateTask, 
-  onDeleteTask, 
+  onAddTask,
+  onUpdateTask,
+  onDeleteTask,
   onToggleComplete,
   onAddProject,
-  onAddCategory 
+  onAddCategory
 }) {
   // States
   const [newTask, setNewTask] = useState({ 
@@ -23,7 +24,7 @@ function MainFeature({
     dueDate: '',
     priority: 'medium',
     categoryId: selectedCategory !== 'all' ? selectedCategory : (categories.length > 0 ? categories[0].id : ''),
-    projectId: selectedProject !== 'all' ? selectedProject : (projects.length > 0 ? projects[0].id : '')
+    projectId: selectedProject !== 'all' ? selectedProject : (projects && projects.length > 0 ? projects[0].id : '')
   })
   
   const [editingTask, setEditingTask] = useState(null)
@@ -69,6 +70,9 @@ function MainFeature({
     if (selectedProject !== 'all') {
       setNewTask(prev => ({ ...prev, projectId: selectedProject }))
     } else if (projects.length > 0) {
+      setNewTask(prev => ({ 
+        ...prev, projectId: projects[0].id 
+      }))
     }
   }, [selectedCategory, categories])
   
@@ -83,7 +87,7 @@ function MainFeature({
   const handleAddTask = (e) => {
     e.preventDefault()
     
-    if (!newTask.title.trim()) {
+    if (!newTask.title || !newTask.title.trim()) {
       toast.error("Task title is required")
       return
     }
@@ -103,7 +107,7 @@ function MainFeature({
       dueDate: '',
       priority: 'medium',
       categoryId: selectedCategory !== 'all' ? selectedCategory : (categories.length > 0 ? categories[0].id : ''),
-      projectId: selectedProject !== 'all' ? selectedProject : (projects.length > 0 ? projects[0].id : '')
+      projectId: selectedProject !== 'all' ? selectedProject : (projects && projects.length > 0 ? projects[0].id : '')
     })
   }
   
@@ -166,7 +170,7 @@ function MainFeature({
 
   // Filter and sort functions
   const getFilteredAndSortedTasks = () => {
-    let filteredTasks = [...tasks]
+
     
     // Filter by completion status
     if (!showCompleted) {
@@ -246,8 +250,8 @@ function MainFeature({
   
   // Get project details
   const getProjectName = (projectId) => {
-    const project = projects.find(p => p.id === projectId)
-    return project ? project.name : 'Inbox'
+    const project = projects && projects.find(p => p.id === projectId)
+    return project ? project.name : 'No Project'
   }
   
   return (
@@ -313,7 +317,7 @@ function MainFeature({
                     : setNewTask({...newTask, projectId: e.target.value})
                   }
                 >
-                  {projects.map(project => (
+                  {projects && projects.map(project => (
                     <option key={project.id} value={project.id}>
                       {project.name}
                     </option>
@@ -619,7 +623,7 @@ function MainFeature({
         {filteredAndSortedTasks.length === 0 ? (
           <div className="card text-center py-8">
             <p className="text-surface-500 dark:text-surface-400">
-              {tasks.length === 0 
+              {tasks && tasks.length === 0 
                 ? "No tasks yet. Add your first task above!" 
                 : "No tasks match the current filters."}
             </p>
@@ -665,8 +669,8 @@ function MainFeature({
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
                           style={{
-                            backgroundColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}20`,
-                            borderColor: `${projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
+                            backgroundColor: `${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}20`,
+                            borderColor: `${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
                           }}
                         >
                           <FolderIcon className="w-3 h-3 inline-block mr-1" />
