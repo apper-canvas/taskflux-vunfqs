@@ -75,7 +75,6 @@ function MainFeature({
         ...prev, projectId: projects[0].id 
       }))
   }, [selectedProject, projects])
-  }, [selectedCategory, categories])
   
   // Scroll to task form when editing
   useEffect(() => {
