@@ -257,6 +257,7 @@ function MainFeature({
   }
   
   return (
+    <div className="space-y-8">
     <div className="space-y-6">
       {/* Header and Categories Tool */}
       <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
@@ -743,7 +744,6 @@ function MainFeature({
       </div>
     </div>
     
-    {/* Task Form */}
     <div className="card mt-8" ref={taskFormRef}>
       <h2 className="text-xl font-semibold mb-4">
         {editingTask ? 'Edit Task' : 'Add New Task'}
@@ -904,6 +904,7 @@ function MainFeature({
           </button>
         </div>
       </form>
+    </div>
     </div>
   )
 }
