@@ -258,9 +258,9 @@ function MainFeature({
   
   return (
     <div className="space-y-6">
-      {/* Task Form */}
-      <div className="card" ref={taskFormRef}>
-        <h2 className="text-xl font-semibold mb-4">
+      {/* Header and Categories Tool */}
+      <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+        <h2 className="text-xl font-semibold">
           {editingTask ? 'Edit Task' : 'Add New Task'}
         </h2>
         
@@ -421,23 +421,9 @@ function MainFeature({
         </form>
       </div>
       
-      {/* Categories Tool */}
-      <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-        <h2 className="text-xl font-semibold">
-          {selectedCategory === 'all' ? 'All Tasks' : `${getCategoryName(selectedCategory)} Tasks`}
-        </h2>
-        
-        <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={() => setIsAddingCategory(!isAddingCategory)}
-            className="btn btn-outline text-sm py-1.5"
-          >
-            {isAddingCategory ? <XIcon className="w-4 h-4" /> : <TagIcon className="w-4 h-4" />}
-            {isAddingCategory ? 'Cancel' : 'Add Category'}
-        <button onClick={() => setIsAddingProject(!isAddingProject)} className="btn btn-outline text-sm py-1.5">
-          {isAddingProject ? <XIcon className="w-4 h-4" /> : <FolderIcon className="w-4 h-4" />} {isAddingProject ? 'Cancel' : 'Add Project'}
-        </button>
-          </button>
+      {/* Task Filters */}
+      <div className="bg-surface-100/50 dark:bg-surface-800/50 rounded-xl p-3 flex flex-col sm:flex-row gap-3">
+        <div className="flex items-center gap-2">
         </div>
       </div>
       
@@ -567,11 +553,27 @@ function MainFeature({
         )}
       </AnimatePresence>
       
-      {/* Task Filters */}
-      <div className="bg-surface-100/50 dark:bg-surface-800/50 rounded-xl p-3 flex flex-col sm:flex-row gap-3">
-        <div className="flex items-center gap-2">
-          <FilterIcon className="w-4 h-4 text-surface-500" />
-          <span className="text-sm font-medium">Filter:</span>
+      {/* Categories Tool */}
+      <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+        <h2 className="text-xl font-semibold">
+          {selectedCategory === 'all' ? 'All Tasks' : `${getCategoryName(selectedCategory)} Tasks`}
+        </h2>
+        
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={() => setIsAddingCategory(!isAddingCategory)}
+            className="btn btn-outline text-sm py-1.5"
+          >
+            {isAddingCategory ? <XIcon className="w-4 h-4" /> : <TagIcon className="w-4 h-4" />}
+            {isAddingCategory ? 'Cancel' : 'Add Category'}
+          </button>
+          
+          <button 
+            onClick={() => setIsAddingProject(!isAddingProject)} 
+            className="btn btn-outline text-sm py-1.5"
+          >
+            {isAddingProject ? <XIcon className="w-4 h-4" /> : <FolderIcon className="w-4 h-4" />} {isAddingProject ? 'Cancel' : 'Add Project'}
+          </button>
         </div>
         
         <div className="flex flex-wrap gap-2">
@@ -739,6 +741,169 @@ function MainFeature({
           </AnimatePresence>
         )}
       </div>
+    </div>
+    
+    {/* Task Form */}
+    <div className="card mt-8" ref={taskFormRef}>
+      <h2 className="text-xl font-semibold mb-4">
+        {editingTask ? 'Edit Task' : 'Add New Task'}
+      </h2>
+      
+      <form onSubmit={editingTask ? handleUpdateTask : handleAddTask} className="space-y-4">
+        <div>
+          <label htmlFor="taskTitle" className="block text-sm font-medium mb-1">
+            Task Title <span className="text-accent">*</span>
+          </label>
+          <input
+            id="taskTitle"
+            type="text"
+            className="input"
+            placeholder="What needs to be done?"
+            value={editingTask ? editingTask.title : newTask.title}
+            onChange={(e) => editingTask 
+              ? setEditingTask({...editingTask, title: e.target.value})
+              : setNewTask({...newTask, title: e.target.value})
+            }
+            required
+          />
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="col-span-1">
+            <label htmlFor="taskCategory" className="block text-sm font-medium mb-1">Category</label>
+            <div className="relative">
+              <select
+                id="taskCategory"
+                className="input appearance-none pr-10"
+                value={editingTask ? editingTask.categoryId : newTask.categoryId}
+                onChange={(e) => editingTask 
+                  ? setEditingTask({...editingTask, categoryId: e.target.value})
+                  : setNewTask({...newTask, categoryId: e.target.value})
+                }
+              >
+                {categories.map(category => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <LayersIcon className="w-5 h-5 text-surface-400" />
+              </div>
+            </div>
+          </div>
+          <div className="col-span-1">
+            <label htmlFor="taskProject" className="block text-sm font-medium mb-1">Project</label>
+            <div className="relative">
+              <select
+                id="taskProject"
+                className="input appearance-none pr-10"
+                value={editingTask ? editingTask.projectId : newTask.projectId}
+                onChange={(e) => editingTask 
+                  ? setEditingTask({...editingTask, projectId: e.target.value})
+                  : setNewTask({...newTask, projectId: e.target.value})
+                }
+              >
+                {projects && projects.map(project => (
+                  <option key={project.id} value={project.id}>
+                    {project.name}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <FolderIcon className="w-5 h-5 text-surface-400" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="col-span-1">
+          <div>
+            <label htmlFor="taskPriority" className="block text-sm font-medium mb-1">Priority</label>
+            <div className="relative">
+              <select
+                id="taskPriority"
+                className="input appearance-none pr-10"
+                value={editingTask ? editingTask.priority : newTask.priority}
+                onChange={(e) => editingTask 
+                  ? setEditingTask({...editingTask, priority: e.target.value})
+                  : setNewTask({...newTask, priority: e.target.value})
+                }
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <FlagIcon className="w-5 h-5 text-surface-400" />
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        
+        <div>
+          <label htmlFor="taskDescription" className="block text-sm font-medium mb-1">Description</label>
+          <textarea
+            id="taskDescription"
+            rows="3"
+            className="input"
+            placeholder="Add some details..."
+            value={editingTask ? editingTask.description : newTask.description}
+            onChange={(e) => editingTask 
+              ? setEditingTask({...editingTask, description: e.target.value})
+              : setNewTask({...newTask, description: e.target.value})
+            }
+          ></textarea>
+        </div>
+        
+          <div>
+            <label htmlFor="taskDueDate" className="block text-sm font-medium mb-1">Due Date</label>
+            <div className="relative">
+              <input
+                id="taskDueDate"
+                type="date"
+                className="input pr-10"
+                value={editingTask ? (editingTask.dueDate || '') : (newTask.dueDate || '')}
+                onChange={(e) => editingTask 
+                  ? setEditingTask({...editingTask, dueDate: e.target.value})
+                  : setNewTask({...newTask, dueDate: e.target.value})
+                }
+              />
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <CalendarIcon className="w-5 h-5 text-surface-400" />
+              </div>
+            </div>
+          </div>
+          
+        <div className="flex justify-end gap-2">
+          {editingTask && (
+            <button
+              type="button"
+              onClick={cancelEdit}
+              className="btn btn-outline"
+            >
+              <XIcon className="w-4 h-4" />
+              Cancel
+            </button>
+          )}
+          <button
+            type="submit"
+            className="btn btn-primary"
+          >
+            {editingTask ? (
+              <>
+                <SaveIcon className="w-4 h-4" />
+                Update Task
+              </>
+            ) : (
+              <>
+                <PlusIcon className="w-4 h-4" />
+                Add Task
+              </>
+            )}
+          </button>
+        </div>
+      </form>
     </div>
   )
 }
