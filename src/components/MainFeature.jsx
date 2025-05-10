@@ -19,7 +19,8 @@ function MainFeature({
   onAddCategory
 }) {
   // States
-  const [newTask, setNewTask] = useState({ 
+  const [newTask, setNewTask] = useState({
+    title: '',
     description: '', 
     dueDate: '',
     priority: 'medium',
@@ -102,6 +103,7 @@ function MainFeature({
     
     onAddTask(task)
     setNewTask({ 
+      title: '',
       title: '', 
       description: '', 
       dueDate: '',
