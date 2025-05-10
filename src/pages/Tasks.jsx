@@ -80,7 +80,6 @@ function Tasks({ darkMode, toggleDarkMode }) {
 
   return (
     <div className="flex min-h-screen">
-    <div className="flex min-h-screen">
       <NavigationMenu darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
       <div className="flex-1 flex flex-col">
@@ -91,8 +90,8 @@ function Tasks({ darkMode, toggleDarkMode }) {
               Tasks
             </h1>
           </div>
-        </header>
-        
+          <MainFeature 
+            tasks={tasks} setTasks={setTasks} projects={projects} setProjects={setProjects} categories={categories} setCategories={setCategories} view="tasks" 
         <main className="flex-1 container mx-auto px-4 py-6 sm:px-6">
           <MainFeature tasks={tasks} setTasks={setTasks} projects={projects} setProjects={setProjects} 
             categories={categories} setCategories={setCategories} view="tasks" />
@@ -103,7 +102,6 @@ function Tasks({ darkMode, toggleDarkMode }) {
           <p>© {new Date().getFullYear()} Todoo's. All rights reserved.</p>
         </footer>
       </div>
-    </div>
   )
 }
 
