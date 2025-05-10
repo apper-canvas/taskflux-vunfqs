@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Home from './pages/Home'
+import Tasks from './pages/Tasks'
 import NotFound from './pages/NotFound'
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
+        <Route path="/tasks" element={<Tasks darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer

@@ -41,7 +41,7 @@ function NotFound() {
         transition={{ delay: 0.3, duration: 0.5 }}
         className="mt-8 text-center text-surface-500"
       >
-        <p>Lost? <Link to="/" className="text-primary hover:underline">Go back to TaskFlux</Link></p>
+        <p>Lost? <Link to="/" className="text-primary hover:underline">Go back to Todoo's</Link></p>
       </motion.div>
     </div>
   )
