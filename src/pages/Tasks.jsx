@@ -113,6 +113,7 @@ function Tasks({ darkMode, toggleDarkMode }) {
             onToggleComplete={(id) => {
               setTasks(tasks.map(task => task.id === id ? {...task, isCompleted: !task.isCompleted} : task));
             }}
+          />
         </main>
 
         <footer className="text-center text-surface-500 dark:text-surface-400 py-6 text-sm border-t border-surface-200 dark:border-surface-700">
