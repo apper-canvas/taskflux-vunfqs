@@ -670,7 +670,7 @@ function MainFeature({
                           }}
                         >
                           <FolderIcon className="w-3 h-3 inline-block mr-1" />
-                          {getProjectName(task.projectId)}
+                          <span>{getProjectName(task.projectId)}</span>
                         </div>
                         
                         <div 
@@ -682,7 +682,6 @@ function MainFeature({
                           }}
                         >
                           {getCategoryName(task.categoryId)}
-                      </div>
                         </div>
                       </div>
                       
