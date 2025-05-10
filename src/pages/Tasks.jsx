@@ -90,19 +90,36 @@ function Tasks({ darkMode, toggleDarkMode }) {
               Tasks
             </h1>
           </div>
+        </header>
+        
+        <main className="flex-1 container mx-auto px-4 py-6 sm:px-6">
           <MainFeature 
-            tasks={tasks} setTasks={setTasks} projects={projects} setProjects={setProjects} categories={categories} setCategories={setCategories} view="tasks" 
-          <MainFeature 
-            tasks={tasks} 
-            setTasks={setTasks} 
-            projects={projects} 
-            setProjects={setProjects} 
+            tasks={tasks}
+            setTasks={setTasks}
+            projects={projects}
+            setProjects={setProjects}
+            categories={categories}
+            setCategories={setCategories}
+            view="tasks"
+            onAddTask={onAddTask}
+            onUpdateTask={(id, updatedTask) => {
+              setTasks(tasks.map(task => task.id === id ? updatedTask : task));
+              toast.success("Task updated successfully!");
+            }}
+            onDeleteTask={(id) => {
+              setTasks(tasks.filter(task => task.id !== id));
+              toast.success("Task deleted successfully!");
+            }}
+            onToggleComplete={(id) => {
+              setTasks(tasks.map(task => task.id === id ? {...task, isCompleted: !task.isCompleted} : task));
+            }}
         </main>
 
         <footer className="text-center text-surface-500 dark:text-surface-400 py-6 text-sm border-t border-surface-200 dark:border-surface-700">
           <p>© {new Date().getFullYear()} Todoo's. All rights reserved.</p>
         </footer>
       </div>
+    </div>
   )
 }
 
