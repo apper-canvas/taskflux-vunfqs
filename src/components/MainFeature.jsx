@@ -666,9 +666,10 @@ function MainFeature({
                         <div 
                           className="text-xs px-2 py-0.5 rounded-full border"
                           style={{
-                            background: `linear-gradient(135deg, ${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}30, ${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}10)`,
-                            borderColor: `${projects && projects.find(p => p.id === task.projectId)?.color || '#3498db'}40`
+                            background: `linear-gradient(135deg, ${(projects && projects.find(p => p.id === task.projectId)?.color) || '#3498db'}30, ${(projects && projects.find(p => p.id === task.projectId)?.color) || '#3498db'}10)`,
+                            borderColor: `${(projects && projects.find(p => p.id === task.projectId)?.color) || '#3498db'}40`
                           }}
+                          
                         >
                           <FolderIcon className="w-3 h-3 inline-block mr-1" />
                           <span>{getProjectName(task.projectId)}</span>
