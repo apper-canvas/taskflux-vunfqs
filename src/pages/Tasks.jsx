@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import NavigationMenu from '../components/NavigationMenu'
 import MainFeature from '../components/MainFeature'
+import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
 import getIcon from '../utils/iconUtils'
 
@@ -72,7 +73,13 @@ function Tasks({ darkMode, toggleDarkMode }) {
     localStorage.setItem('todoos_categories', JSON.stringify(categories))
   }, [categories])
 
+  const onAddTask = (newTask) => {
+    setTasks([...tasks, newTask])
+    toast.success("Task added successfully!")
+  }
+
   return (
+    <div className="flex min-h-screen">
     <div className="flex min-h-screen">
       <NavigationMenu darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
@@ -89,6 +96,7 @@ function Tasks({ darkMode, toggleDarkMode }) {
         <main className="flex-1 container mx-auto px-4 py-6 sm:px-6">
           <MainFeature tasks={tasks} setTasks={setTasks} projects={projects} setProjects={setProjects} 
             categories={categories} setCategories={setCategories} view="tasks" />
+            onAddTask={onAddTask} />
         </main>
 
         <footer className="text-center text-surface-500 dark:text-surface-400 py-6 text-sm border-t border-surface-200 dark:border-surface-700">
