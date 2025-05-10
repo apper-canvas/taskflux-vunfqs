@@ -385,6 +385,75 @@ function MainFeature({
         )}
       </AnimatePresence>
       
+      {/* Categories Tool */}
+      <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+        <h2 className="text-xl font-semibold">
+          {selectedCategory === 'all' ? 'All Tasks' : `${getCategoryName(selectedCategory)} Tasks`}
+        </h2>
+        
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={() => setIsAddingCategory(!isAddingCategory)}
+            className="btn btn-outline text-sm py-1.5"
+          >
+            {isAddingCategory ? <XIcon className="w-4 h-4" /> : <TagIcon className="w-4 h-4" />}
+            {isAddingCategory ? 'Cancel' : 'Add Category'}
+          </button>
+          
+          <button 
+            onClick={() => setIsAddingProject(!isAddingProject)} 
+            className="btn btn-outline text-sm py-1.5"
+          >
+            {isAddingProject ? <XIcon className="w-4 h-4" /> : <FolderIcon className="w-4 h-4" />} {isAddingProject ? 'Cancel' : 'Add Project'}
+          </button>
+        </div>
+        
+        <div className="flex flex-wrap gap-2">
+          <div className="relative">
+            <select
+              className="appearance-none py-1.5 pl-3 pr-8 rounded-lg text-sm bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-600"
+              value={filterPriority}
+              onChange={(e) => setFilterPriority(e.target.value)}
+            >
+              <option value="all">All Priorities</option>
+              <option value="high">High Priority</option>
+              <option value="medium">Medium Priority</option>
+              <option value="low">Low Priority</option>
+            </select>
+            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <ChevronDownIcon className="w-4 h-4 text-surface-400" />
+            </div>
+          </div>
+          
+          <div className="relative">
+            <select
+              className="appearance-none py-1.5 pl-3 pr-8 rounded-lg text-sm bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-600"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option value="dueDate">Sort by Due Date</option>
+              <option value="priority">Sort by Priority</option>
+              <option value="title">Sort by Title</option>
+            </select>
+            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <ChevronDownIcon className="w-4 h-4 text-surface-400" />
+            </div>
+          </div>
+          
+          <button
+            onClick={() => setShowCompleted(!showCompleted)}
+            className={`py-1.5 px-3 rounded-lg text-sm flex items-center gap-1.5
+              ${showCompleted 
+                ? 'bg-primary/10 text-primary dark:bg-primary/20' 
+                : 'bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-600'
+              }`}
+          >
+            {showCompleted ? <CheckIcon className="w-3.5 h-3.5" /> : null}
+            {showCompleted ? 'Showing Completed' : 'Show Completed'}
+          </button>
+        </div>
+      </div>
+      
       {/* Task Form */}
       <div className="card" ref={taskFormRef}>
         <h2 className="text-xl font-semibold mb-4">
@@ -481,75 +550,6 @@ function MainFeature({
             </div>
           </div>
           
-      {/* Categories Tool */}
-      <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-        <h2 className="text-xl font-semibold">
-          {selectedCategory === 'all' ? 'All Tasks' : `${getCategoryName(selectedCategory)} Tasks`}
-        </h2>
-        
-        <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={() => setIsAddingCategory(!isAddingCategory)}
-            className="btn btn-outline text-sm py-1.5"
-          >
-            {isAddingCategory ? <XIcon className="w-4 h-4" /> : <TagIcon className="w-4 h-4" />}
-            {isAddingCategory ? 'Cancel' : 'Add Category'}
-          </button>
-          
-          <button 
-            onClick={() => setIsAddingProject(!isAddingProject)} 
-            className="btn btn-outline text-sm py-1.5"
-          >
-            {isAddingProject ? <XIcon className="w-4 h-4" /> : <FolderIcon className="w-4 h-4" />} {isAddingProject ? 'Cancel' : 'Add Project'}
-          </button>
-        </div>
-        
-        <div className="flex flex-wrap gap-2">
-          <div className="relative">
-            <select
-              className="appearance-none py-1.5 pl-3 pr-8 rounded-lg text-sm bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-600"
-              value={filterPriority}
-              onChange={(e) => setFilterPriority(e.target.value)}
-            >
-              <option value="all">All Priorities</option>
-              <option value="high">High Priority</option>
-              <option value="medium">Medium Priority</option>
-              <option value="low">Low Priority</option>
-            </select>
-            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <ChevronDownIcon className="w-4 h-4 text-surface-400" />
-            </div>
-          </div>
-          
-          <div className="relative">
-            <select
-              className="appearance-none py-1.5 pl-3 pr-8 rounded-lg text-sm bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-600"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-            >
-              <option value="dueDate">Sort by Due Date</option>
-              <option value="priority">Sort by Priority</option>
-              <option value="title">Sort by Title</option>
-            </select>
-            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <ChevronDownIcon className="w-4 h-4 text-surface-400" />
-            </div>
-          </div>
-          
-          <button
-            onClick={() => setShowCompleted(!showCompleted)}
-            className={`py-1.5 px-3 rounded-lg text-sm flex items-center gap-1.5
-              ${showCompleted 
-                ? 'bg-primary/10 text-primary dark:bg-primary/20' 
-                : 'bg-white dark:bg-surface-700 border border-surface-200 dark:border-surface-600'
-              }`}
-          >
-            {showCompleted ? <CheckIcon className="w-3.5 h-3.5" /> : null}
-            {showCompleted ? 'Showing Completed' : 'Show Completed'}
-          </button>
-        </div>
-      </div>
-      
       {/* Task List */}
 
       <div>
