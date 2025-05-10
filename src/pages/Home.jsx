@@ -184,6 +184,7 @@ function Home({ darkMode, toggleDarkMode }) {
                     <span className="text-sm font-medium">{completionRate}%</span>
                   </div>
                   <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-2">
+                    <motion.div
                       className="bg-gradient-to-r from-primary to-primary-dark h-2 rounded-full"
                       className="bg-primary h-2 rounded-full"
                       initial={{ width: '0%' }}

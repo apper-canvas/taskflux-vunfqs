@@ -74,7 +74,7 @@ function MainFeature({
       setNewTask(prev => ({ 
         ...prev, projectId: projects[0].id 
       }))
-    }
+  }, [selectedProject, projects])
   }, [selectedCategory, categories])
   
   // Scroll to task form when editing
@@ -103,7 +103,6 @@ function MainFeature({
     
     onAddTask(task)
     setNewTask({ 
-      title: '',
       title: '', 
       description: '', 
       dueDate: '',
