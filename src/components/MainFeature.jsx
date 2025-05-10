@@ -74,6 +74,7 @@ function MainFeature({
       setNewTask(prev => ({ 
         ...prev, projectId: projects[0].id 
       }))
+    }
   }, [selectedProject, projects])
   
   // Scroll to task form when editing
