@@ -172,6 +172,8 @@ function MainFeature({
   const getFilteredAndSortedTasks = () => {
 
     
+    // Initialize filteredTasks with the tasks prop
+    let filteredTasks = [...tasks];
     // Filter by completion status
     if (!showCompleted) {
       filteredTasks = filteredTasks.filter(task => !task.isCompleted)
