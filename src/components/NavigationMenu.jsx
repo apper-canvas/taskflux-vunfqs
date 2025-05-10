@@ -30,7 +30,7 @@ const NavigationMenu = ({ darkMode, toggleDarkMode }) => {
           {/* Logo and brand */}
           <div className="flex items-center space-x-2">
             <ListIcon className="text-primary" size={24} />
-            <span className="font-heading font-bold text-xl">TaskFlux</span>
+            <span className="font-heading font-bold text-xl">Todoo's</span>
           </div>
 
           {/* Desktop Navigation */}
